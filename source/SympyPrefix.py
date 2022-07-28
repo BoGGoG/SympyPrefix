@@ -4,6 +4,9 @@ from sympy import *
 import numpy as np
 from icecream import ic
 
+import sys
+sys.setrecursionlimit(2000)
+
 # operators and operators_nargs are from 
 # https://github.com/facebookresearch/SymbolicMathematics
 
@@ -113,7 +116,7 @@ integers_types = [
         ]
 
 numbers_types = integers_types + [sp.core.numbers.Rational,
-        sp.core.numbers.Half, sp.core.numbers.Exp1, sp.core.numbers.Pi,
+        sp.core.numbers.Half, sp.core.numbers.Exp1, sp.core.numbers.Pi, "<class 'sympy.core.numbers.Pi'>",
         sp.core.numbers.ImaginaryUnit]
 
 # don't continue evaluating at these, but stop
@@ -122,6 +125,7 @@ atoms = [
         sp.core.symbol.Symbol,
         sp.core.numbers.Exp1,
         sp.core.numbers.Pi,
+        "<class 'sympy.core.numbers.Pi'>",
         ] + numbers_types
 
 # variables or constants
@@ -134,6 +138,55 @@ variables = [
         'c',
         'd',
         'E',
+        'reg_prop',
+        'm_s',
+        'm_u'
+        's_0',
+        's_1',
+        's_2',
+        's_3',
+        's_4',
+        's_5',
+        's_6',
+        's_7',
+        's_8',
+        's_9',
+        's_10',
+        's_11',
+        's_12',
+        's_13',
+        's_14',
+        's_15',
+        's_16',
+        's_17',
+        's_18',
+        's_19',
+        's_20',
+        's_21',
+        's_22',
+        's_23',
+        's_24',
+        's_25',
+        's_26',
+        's_27',
+        's_28',
+        's_29',
+        's_30',
+        's_31',
+        's_32',
+        's_33',
+        's_34',
+        's_35',
+        's_36',
+        's_37',
+        's_38',
+        's_39',
+        's_40',
+        's_41',
+        's_42',
+        's_43',
+        's_44',
+        's_45',
         ]
 
 
@@ -341,6 +394,7 @@ def format_integer(integer):
 
     return ret 
 
+
 def prefix_to_sympy(expr_arr):
     if len(expr_arr) == 1:
         return parse_if_str(expr_arr[0])
@@ -358,6 +412,7 @@ def prefix_to_sympy(expr_arr):
         return prefix_to_sympy(expr)
 
     elif (op == 's+') | (op == "s-"):
+        # int_end_pos = rightmost_int_pos(expr_arr)
         string_end_pos = rightmost_string_pos(expr_arr)
         integer = unformat_integer(expr_arr[op_pos:string_end_pos+1])
         expr_arr_new = expr_arr[0:op_pos] + [integer] + expr_arr[string_end_pos+1:]
@@ -374,6 +429,12 @@ def parse_if_str(x):
         return sp.parsing.parse_expr(x)
     return x
 
+# def rightmost_int_pos(expr_arr, pos=-1):
+#     if isinstance(expr_arr[pos], str):
+#         return len(expr_arr)+pos
+#     else:
+#         return rightmost_string_pos(expr_arr, pos-1)
+#
 def rightmost_string_pos(expr_arr, pos=-1):
     if isinstance(expr_arr[pos], str):
         return len(expr_arr)+pos

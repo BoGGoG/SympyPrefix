@@ -129,19 +129,57 @@ def test_prefix_to_sympy_functions_2():
     expr_recovered3 = prefix_to_sympy(expr_prefix3)
     assert expr3 == expr_recovered3
 
+    # ----------------------------
+    # still haven't figured out how to best handle the below tests
 
-    expr4 = sp.core.numbers.Pi
-    ic(expr4)
-    ic(srepr(expr4))
-    expr_prefix4 = sympy_to_prefix(expr4)
-    ic(expr_prefix4)
+    # expr4 = sp.core.numbers.Pi
+    # expr_prefix4 = sympy_to_prefix(expr4)
+    # ic(expr4)
+    # ic(expr_prefix4)
     # expr_recovered4 = prefix_to_sympy(expr_prefix4)
-    # ic(expr_recovered4)
+    # assert expr4 == expr_recovered4
 
-    expr5 = sp.core.numbers.ImaginaryUnit
-    expr5 = sp.core.numbers.ImaginaryUnit
-    ic(expr5)
-    ic(srepr(expr5))
-    expr_prefix5 = sympy_to_prefix(expr5)
-    ic(expr_prefix5)
+    # expr5 = sp.core.numbers.ImaginaryUnit
+    # expr_prefix5 = sympy_to_prefix(expr5)
+    # ic(expr_prefix5)
+    # expr_recovered5 = prefix_to_sympy(expr_prefix5)
+    # assert expr5 == expr_recovered5
+    
+    # expr6 = sp.parse_expr("I")
+    # expr_prefix6 = sympy_to_prefix(expr6)
+    # ic(expr_prefix6)
+    # expr_recovered6 = prefix_to_sympy(expr_prefix6)
+    # ic(expr_recovered6)
+    #
+
+def test_marty_sqampls_back():
+    """
+    manually copy marty squared amplitudes here to test them
+    """
+    expr_2to3a = "-1/11664*i*e^3*(i*e^3*s_24*((-128)*m_c^2*s_23 + 128*s_13*s_25 + 128*s_12*s_35)/((m_d^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)*(s_24 + -1/2*reg_prop)) + (-2)*i*e^3*m_d^2*(32*m_c^2*s_23 + 64*m_c^2*s_24 + (-32)*s_15*s_24 + (-32)*s_13*s_25 + (-32)*s_12*s_35)/((m_d^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)*(s_24 + -1/2*reg_prop)))/((m_d^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)*(s_24 + -1/2*reg_prop)) + 1/5832*i*e^3*(i*e^3*m_d^2*(32*m_c^2*s_23 + 64*m_c^2*s_24 + (-32)*s_15*s_24 + (-32)*s_13*s_25 + (-32)*s_12*s_35)/((m_d^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)*(s_24 + -1/2*reg_prop)) + (-2)*i*e^3*m_d^2*(64*m_c^2*m_d^2 + (-32)*m_d^2*s_15 + 32*m_c^2*s_34 + (-32)*s_14*s_35 + (-32)*s_13*s_45)/((m_d^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)*(s_24 + -1/2*reg_prop)))/((m_d^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)*(s_24 + -1/2*reg_prop))"
+    expr_2to3a_sympy = sp.parse_expr(expr_2to3a.replace("^", "**"))
+    expr_2to3a_prefix = sympy_to_prefix(expr_2to3a_sympy)
+    expr_2to3a_back = prefix_to_sympy(expr_2to3a_prefix)
+    assert expr_2to3a_sympy == expr_2to3a_back
+
+    expr_2to3b = "-1/729*i*e^3*(i*e^3*((-64)*m_s^4*m_u^2 + (-16)*m_s^2*s_14*s_23 + -1/4*m_s^2*((-64)*m_s^2*s_13 + 128*s_12*s_23) + 32*m_s^2*m_u^2*s_24 + 32*s_12*s_23*s_24 + 16*m_s^2*s_12*s_34)/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)) + (-16)*i*e^3*(m_s^2*m_u^2*s_12 + (-2)*m_s^2*m_u^2*s_23 + -s_14*s_23^2 + -m_u^2*s_12*s_24 + s_13*s_23*s_24 + (-2)*m_s^2*m_u^2*s_34 + m_s^2*s_13*s_34 + s_12*s_23*s_34)/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)) + -i*e^3*(16*m_s^2*s_12*s_23 + (-64)*m_s^2*m_u^2*s_24 + 32*m_u^2*s_24^2 + 16*m_s^2*s_14*s_34 + -1/4*m_s^2*(64*s_14*s_23 + (-64)*s_13*s_24 + 64*s_12*s_34))/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)))/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)) + -16/729*i*e^3*(i*e^3*(m_s^2*m_u^2*s_14 + (-2)*m_s^2*m_u^2*s_23 + m_s^2*s_13*s_23 + -m_u^2*s_14*s_24 + (-2)*m_s^2*m_u^2*s_34 + s_14*s_23*s_34 + s_13*s_24*s_34 + -s_12*s_34^2)/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)) + -1/16*i*e^3*(16*m_s^2*s_12*s_23 + (-64)*m_s^2*m_u^2*s_24 + 32*m_u^2*s_24^2 + 16*m_s^2*s_14*s_34 + -1/4*m_s^2*(64*s_14*s_23 + (-64)*s_13*s_24 + 64*s_12*s_34))/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)) + 1/16*i*e^3*((-64)*m_s^4*m_u^2 + 16*m_s^2*s_14*s_23 + 32*m_s^2*m_u^2*s_24 + (-16)*m_s^2*s_12*s_34 + 32*s_14*s_24*s_34 + -1/4*m_s^2*((-64)*m_s^2*s_13 + 128*s_14*s_34))/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)))/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)) + 16/729*i*e^3*(i*e^3*(m_s^2*m_u^2*s_12 + (-2)*m_s^2*m_u^2*s_23 + -s_14*s_23^2 + -m_u^2*s_12*s_24 + s_13*s_23*s_24 + (-2)*m_s^2*m_u^2*s_34 + m_s^2*s_13*s_34 + s_12*s_23*s_34)/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)) + -i*e^3*(m_s^2*m_u^2*s_14 + (-2)*m_s^2*m_u^2*s_23 + m_s^2*s_13*s_23 + -m_u^2*s_14*s_24 + (-2)*m_s^2*m_u^2*s_34 + s_14*s_23*s_34 + s_13*s_24*s_34 + -s_12*s_34^2)/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)) + -1/4*i*e^3*((-16)*m_s^2*m_u^4 + 8*m_s^2*m_u^2*s_13 + (-8)*m_u^2*s_13*s_24 + 16*s_13*s_23*s_34 + 16*m_u^2*(m_u^2*s_24 + (-2)*s_23*s_34))/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop)))/((m_s^2 + -s_24 + 1/2*reg_prop)*(m_s^2 + -s_23 + -s_24 + s_34 + 1/2*reg_prop))"
+    expr_2to3b_sympy = sp.parse_expr(expr_2to3b.replace("^", "**"))
+    expr_2to3b_prefix = sympy_to_prefix(expr_2to3b_sympy)
+    expr_2to3b_back = prefix_to_sympy(expr_2to3b_prefix)
+    assert expr_2to3b_sympy == expr_2to3b_back
+    ic(len(expr_2to3b_prefix))
+
+    expr_2to3c = "-1/144*i*e^3*(i*e^3*s_12*(128*m_u^2*s_23 + 128*s_25*s_34 + 128*s_24*s_35)/((s_12 + 1/2*reg_prop)*(m_t^2 + s_12 + -s_13 + -s_23 + 1/2*reg_prop)) + 2*i*e^3*m_t^2*(64*m_u^2*s_12 + (-32)*m_u^2*s_23 + (-32)*s_25*s_34 + (-32)*s_24*s_35 + 32*s_12*s_45)/((s_12 + 1/2*reg_prop)*(m_t^2 + s_12 + -s_13 + -s_23 + 1/2*reg_prop)))/((s_12 + 1/2*reg_prop)*(m_t^2 + s_12 + -s_13 + -s_23 + 1/2*reg_prop)) + -1/36*i*e^3*(i*e^3*m_t^2*(64*m_t^2*m_u^2 + (-32)*m_u^2*s_13 + (-32)*s_15*s_34 + (-32)*s_14*s_35 + 32*m_t^2*s_45)/((s_12 + 1/2*reg_prop)*(m_t^2 + s_12 + -s_13 + -s_23 + 1/2*reg_prop)) + 1/2*i*e^3*m_t^2*(64*m_u^2*s_12 + (-32)*m_u^2*s_23 + (-32)*s_25*s_34 + (-32)*s_24*s_35 + 32*s_12*s_45)/((s_12 + 1/2*reg_prop)*(m_t^2 + s_12 + -s_13 + -s_23 + 1/2*reg_prop)))/((s_12 + 1/2*reg_prop)*(m_t^2 + s_12 + -s_13 + -s_23 + 1/2*reg_prop))"
+    expr_2to3c_sympy = sp.parse_expr(expr_2to3c.replace("^", "**"))
+    expr_2to3c_prefix = sympy_to_prefix(expr_2to3c_sympy)
+    expr_2to3c_back = prefix_to_sympy(expr_2to3c_prefix)
+    assert expr_2to3c_sympy == expr_2to3c_back
+    ic(len(expr_2to3c_prefix))
+
+    expr_2to3d = "4/81*e^4*(16*m_c^2*m_u^2 + (-8)*m_c^2*s_13 + 8*s_14*s_23 + (-8)*m_u^2*s_24 + 8*s_12*s_34)*(m_u^2 + -s_13 + 1/2*reg_prop)^(-2)"
+    expr_2to3d_sympy = sp.parse_expr(expr_2to3d.replace("^", "**"))
+    expr_2to3d_prefix = sympy_to_prefix(expr_2to3d_sympy)
+    expr_2to3d_back = prefix_to_sympy(expr_2to3d_prefix)
+    assert expr_2to3d_sympy == expr_2to3d_back
+    ic(len(expr_2to3d_prefix))
 
