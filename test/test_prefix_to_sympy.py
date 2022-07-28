@@ -126,6 +126,8 @@ def test_prefix_to_sympy_functions_2():
 
     expr3 = sp.core.numbers.pi
     expr_prefix3 = sympy_to_prefix(expr3)
+    expr_recovered3 = prefix_to_sympy(expr_prefix3)
+    assert expr3 == expr_recovered3
 
 
     expr4 = sp.core.numbers.Pi
