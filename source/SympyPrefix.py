@@ -303,13 +303,13 @@ def format_half():
     for some reason in sympy 1/2 is its own object and not a rational.
     This function formats it correctly like `format_rational`
     """
-    return ['mul'] + ['int', 's+', '1'] + ['pow'] + ['int', 's+', '2'] + ["int", "s-", "1"]
+    return ['mul'] + ['s+', '1'] + ['pow'] + ['s+', '2'] + ["s-", "1"]
 
 def format_rational(number):
     # for some reason number.p is a string
     p = sp.sympify(number.p)
     q = sp.sympify(number.q)
-    return ['mul'] + format_integer(p) + ['pow'] + format_integer(q) + ['int', 's-', '1']
+    return ['mul'] + format_integer(p) + ['pow'] + format_integer(q) + ['s-', '1']
 
 def format_integer(integer):
     """take a sympy integer and format it as in 
@@ -319,12 +319,12 @@ def format_integer(integer):
         integer: a `sympy.Integer` object, e.g. `sympy.Integer(-1)`
 
     output:
-        ['int', sign_token, digit0, digit1, ...]
+        [sign_token, digit0, digit1, ...]
         where sign_token is 's+' or 's-' 
 
     Example: 
         format_integer(sympy.Integer(-123))
-        >> ['int', 's-', '1', '2', '3']
+        >> ['s-', '1', '2', '3']
 
     Implementation notes:
     Somehow Integer inherits from Rational in Sympy and a rational is p/q,
@@ -332,13 +332,12 @@ def format_integer(integer):
     """
     plus_sign = "s+"
     minus_sign = "s-"
-    integer_start = "int"
     abs_num = abs(integer.p)
     is_neg = integer.could_extract_minus_sign()
     sign = minus_sign if is_neg else plus_sign
     digits = list(str(abs_num))
 
-    ret = [integer_start] + [sign] + digits
+    ret = [sign] + digits
 
     return ret 
 
@@ -394,7 +393,7 @@ def unformat_integer(arr):
     inverse of the function format_integer.
 
     input:
-        arr: array of strings just as the output of format_integer. E.g. ["int", "s+", "4", "2"]
+        arr: array of strings just as the output of format_integer. E.g. ["s+", "4", "2"]
 
     output:
         the correspinding sympy integer, e.g. sympy.Integer(42) in the above example.

@@ -39,13 +39,13 @@ def test_many_arguments_add():
     expr6_prefix = sympy_to_prefix(expr6)
     assert expr1_prefix == ["add", "x", "y"]
     assert expr2_prefix == ["add", "x", "add", "y", "z"]
-    assert expr3_prefix ==  ['add', 'int', 's+', '3', 'add', 'x', 'add', 'y', 'z']
-    assert expr4_prefix ==  ['add', 'int', 's+', '3', 'add', 'E', 'add', 'x', 'add', 'y', 'z']
+    assert expr3_prefix ==  ['add', 's+', '3', 'add', 'x', 'add', 'y', 'z']
+    assert expr4_prefix ==  ['add', 's+', '3', 'add', 'E', 'add', 'x', 'add', 'y', 'z']
     ic(expr5_prefix)
-    assert expr5_prefix ==  ['add', 'int', 's+', '3', 'add', 'E', 'add', 'a', 'add', 'y', 'add', 'z',
-        'mul', 'int', 's-', '1', 'x']
+    assert expr5_prefix ==  ['add', 's+', '3', 'add', 'E', 'add', 'a', 'add', 'y', 'add', 'z',
+        'mul', 's-', '1', 'x']
     ic(expr6_prefix)
-    assert expr6_prefix ==  ['add', 'int', 's-', '3', 'add', 'E', 'add', 'x', 'add', 'y', 'add', 'z', 'sin', 'x']
+    assert expr6_prefix ==  ['add', 's-', '3', 'add', 'E', 'add', 'x', 'add', 'y', 'add', 'z', 'sin', 'x']
     
 def test_many_arguments_mult():
     expr1 = sympy.parsing.parse_expr("x*y")
@@ -57,7 +57,7 @@ def test_many_arguments_mult():
     expr3_prefix = sympy_to_prefix(expr3)
     assert expr1_prefix == ["mul", "x", "y"]
     assert expr2_prefix == ["mul", "x", "mul", "y", "z"]
-    assert expr3_prefix ==  ['mul', 'int', 's+', '3', 'mul', 'x', 'mul', 'y', 'z']
+    assert expr3_prefix ==  ['mul', 's+', '3', 'mul', 'x', 'mul', 'y', 'z']
 
 def test_div():
     expr1 = sympy.parsing.parse_expr("x/y")
@@ -65,16 +65,17 @@ def test_div():
     expr3 = sympy.parsing.parse_expr("-1/3")
     expr4 = sympy.parsing.parse_expr("x/42")
     # TODO: sadly x/42 first gets converted to 1/42 * x and won't give the nicer
-    # output ['div', 'x', 'int', 's+', '4', '2'], might want to fix this at some point
+    # output ['div', 'x', 's+', '4', '2'], might want to fix this at some point
     
     expr1_prefix = sympy_to_prefix(expr1)
     expr2_prefix = sympy_to_prefix(expr2)
     expr3_prefix = sympy_to_prefix(expr3)
     expr4_prefix = sympy_to_prefix(expr4)
-    assert expr1_prefix == ["mul", "x", 'pow', "y", 'int', 's-', '1']
-    assert expr2_prefix == ["mul", "x", 'mul', 'pow', "y", 'int', 's-', '1', 'pow', 'z', 'int', 's-', '1']
-    assert expr3_prefix == ['mul', 'int', 's-', '1', 'pow', 'int', 's+', '3', 'int', 's-', '1']
-    assert expr4_prefix == ['mul', 'mul', 'int', 's+', '1', 'pow', 'int', 's+', '4', '2', 'int', 's-', '1', 'x']
+    assert expr1_prefix == ["mul", "x", 'pow', "y",  's-', '1']
+    assert expr2_prefix == ["mul", "x", 'mul', 'pow', "y", 's-', '1', 'pow', 'z', 's-', '1']
+    ic(expr3_prefix)
+    assert expr3_prefix == ['mul', 's-', '1', 'pow', 's+', '3', 's-', '1']
+    assert expr4_prefix == ['mul', 'mul', 's+', '1', 'pow', 's+', '4', '2', 's-', '1', 'x']
     
 def test_format_number():
     numbers_str = [ 
