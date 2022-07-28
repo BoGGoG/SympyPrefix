@@ -357,7 +357,7 @@ def prefix_to_sympy(expr_arr):
         expr = expr_arr[0:op_pos] + [func] + expr_arr[op_pos+num_args+1:]
         return prefix_to_sympy(expr)
 
-    elif op == 'int':
+    elif (op == 's+') | (op == "s-"):
         string_end_pos = rightmost_string_pos(expr_arr)
         integer = unformat_integer(expr_arr[op_pos:string_end_pos+1])
         expr_arr_new = expr_arr[0:op_pos] + [integer] + expr_arr[string_end_pos+1:]
@@ -382,7 +382,7 @@ def rightmost_string_pos(expr_arr, pos=-1):
 
 
 def rightmost_operand_pos(expr, pos=-1):
-    operators = list(operators_inv.keys()) + ["int"] + variables
+    operators = list(operators_inv.keys()) + ["s+", "s-"] + variables
     if expr[pos] in operators:
         return len(expr) + pos
     else:
@@ -401,9 +401,9 @@ def unformat_integer(arr):
     The sign tokens are "s+" for positive integers and "s-" for negative. 0 comes with "s+", but does not matter.
 
     """
-    sign_token = arr[1]
+    sign_token = arr[0]
     ret = "-" if sign_token == "s-" else ""
-    for s in arr[2:]:
+    for s in arr[1:]:
         ret += s
 
     return sp.parsing.parse_expr(ret)
