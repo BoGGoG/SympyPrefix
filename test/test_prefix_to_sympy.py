@@ -181,5 +181,7 @@ def test_marty_sqampls_back():
     expr_2to3d_prefix = sympy_to_prefix(expr_2to3d_sympy)
     expr_2to3d_back = prefix_to_sympy(expr_2to3d_prefix)
     assert expr_2to3d_sympy == expr_2to3d_back
+    print(expr_2to3d)
+    print(expr_2to3a_prefix)
     ic(len(expr_2to3d_prefix))
 
